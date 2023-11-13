@@ -5,6 +5,12 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    res.header('Access-Control-Allow-Origin', origin);
+    next();
+});
+
 app.get('/', (req, res) => {
     // Путь к файлу, который вы хотите вернуть
     const filePath = path.join(__dirname, 'reklama.jpg');
