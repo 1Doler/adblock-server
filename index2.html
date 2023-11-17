@@ -33,12 +33,18 @@
             document.body.prepend(banner);
             
             const classes = "content-list__ad-label ad banner adriver tracker analytics ads reklama ad-sidebar adsbox adblock-blocker";
-            banner.addEventListener("transitionend", () => {
-                console.lob(document.getElementById(adriverAdBanner).style.display);
+
+            const addClasses = () => {
+                banner.className = classes;
+                var event = new Event('addClass');
+                banner.dispatchEvent(event);
+            }
+            banner.addEventListener("addClass", () => {
+                console.log("asdas");
+                if (document.getElementById("adriverAdBanner"))
+                    console.log(document.getElementById("adriverAdBanner").style.display);
             });
-            banner.addEventListener("animationend", () => {
-                console.lob(document.getElementById(adriverAdBanner).style.display);
-            });
+
             var observer = new MutationObserver(function(mutations) {
                 const splitClasses = classes.split(" ");
                 
@@ -61,7 +67,7 @@
             var config = { attributes: true };
             observer.observe(banner, config);
 
-            banner.className = classes;
+            addClasses();
 
         }
 
