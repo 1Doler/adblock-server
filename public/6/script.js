@@ -61,7 +61,7 @@ function loadImage() {
         console.log("Блокировщик не обнаружен");
     })
 
-    image.src = "https://ad-banner.onrender.com/?ev.adriver.ru";
+    image.src = "https://ad-banner.onrender.com/img/?ev.adriver.ru";
     
     document.body.append(image);
 }
