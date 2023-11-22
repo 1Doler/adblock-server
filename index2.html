@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2</title>
-</head>
-<br>
-
-    <div id="ads">
-        <p>Блокировщик не обнаружен.</p>
-    </div>
-    <div id="alt" style="display:none;">
-        <p style="color:red;">Блокировщик обнаружен.</p>
-    </div>
+    <title>Document</title>
     
+</head>
+<body>
     <script>
         
-        const dValue = 1;
+        const dValue = 100;
         const createBanner = () => {
             
             const banner = document.createElement("div");
@@ -26,53 +19,62 @@
             banner.style.opacity = dValue;
             banner.style.zIndex = dValue;
             banner.style.position = "absolute"
-            banner.style.display = "block !important"
+            banner.style.background = "red";
 
             const bannerStyle = window.getComputedStyle(banner);
             banner.id = "adriverAdBanner";
-            document.body.prepend(banner);
+            document.body.append(banner);
             
             const classes = "content-list__ad-label ad banner adriver tracker analytics ads reklama ad-sidebar adsbox adblock-blocker";
-
-            const addClasses = () => {
-                banner.className = classes;
-                var event = new Event('addClass');
-                banner.dispatchEvent(event);
-            }
-            banner.addEventListener("addClass", () => {
-                console.log("asdas");
-                if (document.getElementById("adriverAdBanner"))
-                    console.log(document.getElementById("adriverAdBanner").style.display);
-            });
-
+            
             var observer = new MutationObserver(function(mutations) {
                 const splitClasses = classes.split(" ");
                 
-                setTimeout(() => {
+                const intervalId = setInterval(() => {
                     for (var i = 0; i < splitClasses.length; i++) {
                         var styles = window.getComputedStyle(banner, "." + splitClasses[0]);
                         if (
                             styles.display === "none"
                         ) {
-                            document.getElementById("ads").style.display = "none";
-                            document.getElementById("alt").style.display = "block";
+
+                            console.log("adBlock detect");
+
+                            clearInterval(intervalId);
+                            clearTimeout(timerId);
+
                             break;
                         }  
     
                     }
                 }, 100);
 
+                const timerId = setTimeout(() => {
+                    clearInterval(intervalId);
+                    console.log("Блокировщик не обнаружен.");
+                }, 2000);
+
             });
 
             var config = { attributes: true };
             observer.observe(banner, config);
 
-            addClasses();
+            banner.className = classes;
 
-        }
-
+        } 
         createBanner();
 
+    </script>
+    
+    <script>
+        for (let i=0; i<5000; i++) {
+            const el = document.createElement("a");
+            el.textContent = i + "i";
+            document.body.append(el);
+            console.log("a");
+        }
+        window.addEventListener('load', function() {
+            console.log('DOM готов');
+        });
     </script>
 </body>
 </html>
