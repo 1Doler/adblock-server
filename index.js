@@ -10,6 +10,9 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', origin);
     next();
 });
+const publicPath = path.join(__dirname, 'public');
+
+app.use(express.static(publicPath));
 
 app.get('/', (req, res) => {
     // Путь к файлу, который вы хотите вернуть
