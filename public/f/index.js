@@ -239,6 +239,69 @@
     });
 
     /**
+     * Регулярно вызывает переданную функцию через интервал времению.
+     */
+    class Loop {
+        /**
+         * Числовой id setTimeout.
+         *
+         * @see https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#return_value
+         */
+        timeoutId;
+        /**
+         * Задержка в миллисекундах.
+         */
+        timeout;
+        /**
+         * Функция которую надо вызвать.
+         */
+        cb;
+        /**
+         * Флаг, указывающий, следует ли продолжать выполнение цикла.
+         */
+        shouldContinue;
+        /**
+         * @param cb - функция которую надо вызвать.
+         * @param timeout - задержка в миллисекундах.
+         */
+        constructor(cb, timeout = 0) {
+            this.cb = cb;
+            this.timeoutId = null;
+            this.timeout = number(timeout) && timeout >= 0 ? timeout : 0;
+            this.shouldContinue = false;
+        }
+        /**
+         * Метод представляет одну итерацию цикла, вызывает переданную функцию и
+         * запускает таймер на следующий вызов.
+         */
+        loopIteration() {
+            if (!this.shouldContinue)
+                return;
+            this.cb();
+            this.timeoutId = setTimeout(this.loopIteration.bind(this), this.timeout);
+        }
+        /**
+         * Запускает цикл вызовов.
+         */
+        start() {
+            if (this.timeoutId !== null)
+                return;
+            this.shouldContinue = true;
+            this.loopIteration();
+        }
+        /**
+         * Останавливает цикл вызовов.
+         */
+        stop() {
+            if (this.timeoutId === null)
+                return;
+            clearTimeout(this.timeoutId);
+            this.shouldContinue = false;
+            this.timeoutId = null;
+        }
+    }
+
+    /**
      * Copyright 2016 Google Inc. All Rights Reserved.
      *
      * Licensed under the W3C SOFTWARE AND DOCUMENT NOTICE AND LICENSE.
@@ -1254,6 +1317,7 @@
 
     var AD_CLASSES = "content-list__ad-label ad banner adriver tracker analtics ads reklama ad-sidebar adsbox adblock-blocker";
     var DEFAULT_DIMENSION = "1";
+    var INTERVAL = 50;
     var TIMEOUT = 1000;
     var AdblockDetector = /** @class */ (function () {
         function AdblockDetector() {
@@ -1265,14 +1329,19 @@
                 return __generator(this, function (_a) {
                     adElement = this.createAdElement();
                     return [2 /*return*/, new Promise(function (resolve) {
-                            setTimeout(function () {
+                            var loop = new Loop(function () {
                                 if (_this.checkStyles(adElement)) {
                                     clearTimeout(timeoutId);
+                                    adElement.remove();
+                                    loop.stop();
                                     resolve(true);
                                 }
-                            });
+                            }, INTERVAL);
                             adElement.className = AD_CLASSES;
+                            loop.start();
                             var timeoutId = setTimeout(function () {
+                                adElement.remove();
+                                loop.stop();
                                 resolve(false);
                             }, TIMEOUT);
                         })];
@@ -1293,7 +1362,6 @@
         AdblockDetector.prototype.checkStyles = function (element) {
             var size = px(DEFAULT_DIMENSION);
             var elementStyles = window.getComputedStyle(element);
-            console.log(elementStyles.display);
             if (elementStyles.display === "none" ||
                 elementStyles.visibility === "hidden" ||
                 elementStyles.height !== size ||
