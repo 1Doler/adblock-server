@@ -13,6 +13,11 @@
     </div>
 
     <script>
+        window.addEventListener('message', event => {
+            console.log("callMessage");
+            checkStylesIframe();
+        });
+
         function checkStylesIframe() {
             const iframeElement = document.body;
             
