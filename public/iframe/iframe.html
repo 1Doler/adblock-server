@@ -23,7 +23,7 @@
             
             if (iframeElement && iframeElement.ownerDocument && iframeElement.ownerDocument.defaultView) {
                 const iframeWindow = iframeElement.ownerDocument.defaultView;
-                
+                console.log(iframeWindow);
                 if (checkStyles(iframeWindow.frameElement)) 
                     console.log("Iframe скрыт");
                 else 
@@ -36,6 +36,16 @@
                 return true
                 
             const styles = window.getComputedStyle(el);
+            console.log(styles.display);
+            console.log(styles.opacity);
+            console.log(styles.transform);
+            console.log(styles.visibility);
+            console.log(styles.height);
+            console.log(styles.width);
+            console.log(styles.maxHeight);
+            console.log(styles.maxWidth);
+            console.log(styles.maxWidth);
+            console.log(styles.innerHTML);
             return (
                 styles.display === "none" ||
                 styles.opacity === "0" ||
