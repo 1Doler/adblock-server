@@ -17,21 +17,15 @@
             console.log("callMessage");
             checkStylesIframe();
         });
-        setInterval(() => checkStylesIframe(), 5000);
 
         function checkStylesIframe() {
             const iframeElement = document.getElementsByClassName("hidden-element")[0];
-            console.log("element", iframeElement)
-            
-            if (iframeElement && iframeElement.ownerDocument && iframeElement.ownerDocument.defaultView) {
-                const iframeWindow = iframeElement.ownerDocument.defaultView;
-                console.log("iframeWindow", iframeWindow);
-                console.log("frameElement", iframeWindow.frameElement);
-                if (checkStyles(iframeWindow.frameElement)) 
-                    console.log("Iframe скрыт");
-                else 
-                    console.log("Iframe не скрыт");
-            }
+            const iframeStyles = window.getComputedStyle(window.frameElement);
+            console.log(window.frameElement);
+            if (checkStyles(window.frameElement)) 
+                console.log("Iframe скрыт");
+            else 
+                console.log("Iframe не скрыт");
         }
 
         function checkStyles(el) {
