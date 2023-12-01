@@ -13,10 +13,8 @@
     </div>
 
     <script>
-        window.addEventListener('message', event => {
+        window.addEventListener('message', (event) => {
             console.log("callMessage");
-            console.log(event.data.styles);
-            checkStylesIframe();
         });
 
         function checkStylesIframe() {
