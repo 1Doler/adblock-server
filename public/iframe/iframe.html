@@ -15,7 +15,7 @@
     <script>
         window.addEventListener('message', event => {
             console.log("callMessage");
-            checkStylesIframe();
+            checkStylesIframe.bind(this);
         });
 
         function checkStylesIframe() {
