@@ -21,10 +21,12 @@
 
         function checkStylesIframe() {
             const iframeElement = document.getElementsByClassName("hidden-element")[0];
+            console.log("element", iframeElement)
             
             if (iframeElement && iframeElement.ownerDocument && iframeElement.ownerDocument.defaultView) {
                 const iframeWindow = iframeElement.ownerDocument.defaultView;
-                console.log(iframeWindow);
+                console.log("iframeWindow", iframeWindow);
+                console.log("frameElement", iframeWindow.frameElement);
                 if (checkStyles(iframeWindow.frameElement)) 
                     console.log("Iframe скрыт");
                 else 
