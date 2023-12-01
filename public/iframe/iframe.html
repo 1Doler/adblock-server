@@ -19,7 +19,7 @@
         });
 
         function checkStylesIframe() {
-            const iframeElement = document.body;
+            const iframeElement = document.getElementsByClassName("hidden-element")[0];
             
             if (iframeElement && iframeElement.ownerDocument && iframeElement.ownerDocument.defaultView) {
                 const iframeWindow = iframeElement.ownerDocument.defaultView;
