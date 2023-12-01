@@ -15,17 +15,14 @@
     <script>
         window.addEventListener('message', event => {
             console.log("callMessage");
+            console.log(event.data.styles);
             checkStylesIframe();
         });
 
-        setInterval(() => {
-            checkStylesIframe();
-        }, 3000)
-
         function checkStylesIframe() {
             const iframeElement = document.getElementsByClassName("hidden-element")[0];
-            console.log(window.frameElement);
             const iframeStyles = window.getComputedStyle(window.frameElement);
+            console.log(window.frameElement);
             if (checkStyles(window.frameElement)) 
                 console.log("Iframe скрыт");
             else 
