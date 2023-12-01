@@ -15,8 +15,9 @@
     <script>
         window.addEventListener('message', event => {
             console.log("callMessage");
-            checkStylesIframe.bind(this);
+            checkStylesIframe();
         });
+        setInterval(() => checkStylesIframe(), 5000);
 
         function checkStylesIframe() {
             const iframeElement = document.getElementsByClassName("hidden-element")[0];
