@@ -12,47 +12,19 @@
         </div>
     </div>
 
+    <script src="index.js"></script>
     <script>
-        window.addEventListener('message', (event) => {
-            console.log(event);
-        });
+        const options = {
+            rootMargin: "0px",
+            threshold: [0, 0.12, 0.25, 0.37, 0.5, 0.75, 1],
+            trackVisibility: true,
+            delay: 100
+        };
+        const o = new IntersectionObserver((entries) => {
+            console.log(entries);
+        }, options)
 
-        function checkStylesIframe() {
-            const iframeElement = document.getElementsByClassName("hidden-element")[0];
-            const iframeStyles = window.getComputedStyle(window.frameElement);
-            console.log(window.frameElement);
-            if (checkStyles(window.frameElement)) 
-                console.log("Iframe скрыт");
-            else 
-                console.log("Iframe не скрыт");
-        }
-
-        function checkStyles(el) {
-            if (!el)
-                return true
-                
-            const styles = window.getComputedStyle(el);
-            console.log(styles.display);
-            console.log(styles.opacity);
-            console.log(styles.transform);
-            console.log(styles.visibility);
-            console.log(styles.height);
-            console.log(styles.width);
-            console.log(styles.maxHeight);
-            console.log(styles.maxWidth);
-            console.log(styles.maxWidth);
-            console.log(styles.innerHTML);
-            return (
-                styles.display === "none" ||
-                styles.opacity === "0" ||
-                styles.transform === "scale(0)" || styles.transform === "matrix(0, 0, 0, 0, 0, 0)" ||
-                styles.visibility === "hidden" ||
-                parseInt(styles.top) < 0 || parseInt(styles.bottom) < 0 || parseInt(styles.left) < 0 || parseInt(styles.right) < 0 ||
-                styles.height === "0px" || styles.width === "0px" || styles.maxHeight === "0px" || styles.maxWidth === "0px" ||
-                el.innerHTML === null
-            )
-        }
-
+        o.observe(document.body);
     </script>
 
     <style>
