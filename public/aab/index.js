@@ -2172,7 +2172,7 @@
             var _this = this;
             return new Promise(function (resolve, reject) {
                 _this.imgElement.onload = function () { return resolve(); };
-                _this.imgElement.onerror = function () { return resolve(); };
+                _this.imgElement.onerror = function () { return reject(); };
                 _this.imgElement.src = _this.config.src;
             });
         };
@@ -3184,7 +3184,6 @@
          * конфиг баннера (reply) который уже содержит всю информацию о конкретном креативе.
          */
         function Banner(bannerConfig, reply) {
-            console.log(bannerConfig);
             this.finallyCbList = [];
             this.bannerReplyUrl = new URI(BANNER_REPLY_URL)
                 .setParams(bannerConfig.params)
@@ -3224,7 +3223,6 @@
                 if (Object.prototype.hasOwnProperty.call(reply, "noContent"))
                     throw new Error("no content");
                 _this.reply = reply;
-                console.log(reply);
                 return window.AdR.create("banners/".concat(BANNER_MAP[_this.reply.bannerType]), _this.slot, reply);
             })
                 .then(function (banner) {
