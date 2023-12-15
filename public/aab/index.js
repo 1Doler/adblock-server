@@ -2159,12 +2159,12 @@
          * @param config - конфигурация баннера.
          */
         function ImgBanner(slot, config) {
-            ({
+            var encodeURL = {
                 href: new URI(config.href).aabEncode().toString(),
                 src: new URI(config.src).aabEncode().toString()
-            });
+            };
             this.slot = slot;
-            this.config = __assign({}, config);
+            this.config = __assign(__assign({}, config), encodeURL);
             this.imgElement = new Image();
             this.link = document.createElement("a");
             this.bannerWrapper = document.createElement("div");
